@@ -1,6 +1,7 @@
 ---
 title: A Nostalgic Decentralization 
 date: "2019-06-01T22:12:03.284Z"
+description: a first post
 ---
 
 The 90s kids were kindof lucky. For those of us that were old enough to be lucid but young enough to
