@@ -5,7 +5,7 @@ description: a first post
 ---
 
 The 90s kids were kindof lucky. For those of us that were old enough to be lucid but young enough to
-have endless hours to sink into mindless obsessions, the rapid expanse of personal computers and networking
+have endless hours to sink into mindless obsessions, the rapid expansion of personal computers and networking
 was magical. I went from failing to control the whims of a character resembling a blurry cross stitch to
 controlling the same man, now rendered in 3D, as he flew through the skies on a winged hat.
 
