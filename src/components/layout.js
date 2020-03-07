@@ -64,8 +64,12 @@ function Layout(props) {
           styles={css`
           @media (prefers-color-scheme: dark) {
             body {
-              background: #000000;
-              color: white;
+              background: linear-gradient(to bottom right, #333, #111);
+              color: #ffeebb;
+            }
+
+            a {
+              color: #ffcc99;
             }
           }
           `}
