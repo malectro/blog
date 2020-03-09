@@ -14,7 +14,7 @@ I was attempting to relive the experience of playing the first blockbuster video
 
 But at 12 years old none of these details were apparent to me. I was simply at the right age to have enjoyed the basic goals and lo-res sprites of NES platformers and then watched video games grow up as I did. Adding complexity here and there, rising in ambition and scope. It felt both natural and magical.
 
-And I was at the right age to be completely engrossed in FF7. For months I wandered through middle school in a daze, doodling images of cyber-punk machinery, and desperate to get home and pick up where I'd left off. On the weekends I would spring out of bed at 6am, unconciously skirting the limits my parents had set on playtime.
+And I was at the right age to be completely engrossed in FF7. For months I wandered through middle school in a daze, doodling images of cyber-punk machinery and desperate to get home and pick up where I'd left off. On the weekends I would spring out of bed at 6am, unconciously skirting the limits my parents had set on playtime.
 
 It was imperative to me to dissect every piece of lore, scour every corner of its map, and tear apart each meticulously crafted pre-rendered background [^1]. As an adult I frequently question the value of my chosen activities. Is sitting here watching The Good Place the best use of my time? Is writing about a video game I liked once a crass exercise in poptimism?
 
@@ -52,7 +52,7 @@ RPGs today have gotten very good at distilling their most the most enjoyable asp
 
 FF7 puts the player in the role of Cloud Strife, an ex-soldier turned mercenary hired by a gang of eco-terrorists to help bring down a hyper-capitalist regime. Cloud has a strange relationship with the main villain, the experimental offspring of a human and an alien, that may have involved them sharing DNA during their time in the military. Players also learn about the "lifestream", which seems to function much like a qi-health meter for the planet and is drying out due to human industry.
 
-Needless to say, this is all weirdly still relevant probably informed a lot of adolescent worldviews.
+Needless to say, this is all weirdly still relevant and probably informed a lot of adolescent worldviews.
 
 [^3]: Skyrim, GTA
 
@@ -64,7 +64,7 @@ At work I noticed Spotify had just added the soundtrack and started listening. O
 
 The music composer of FF7, Nobuo Uematsu, is a bit like the John Williams of video games in that he has risen to semi-celebrity among fans. Most gamers probably don't know the names of any other composers – even the ones behind their favorites.
 
-Like the game itself, Uematsu's score was more ambitious than anything that came before it. Some of the tracks are instrumentally and melodically unique while others subtly evoke the main theme using different keys and modes. Composing for video games different than composing for passive media like film and television. Players have to enjoy the same track for minutes to hours before progressing to a new area, and the composer needs to account for randomized spikes in tension. A good track has to evoke the environment and situation of the characters while not being so distracting or repetitive that players get annoyed.
+Like the game itself, Uematsu's score was more ambitious than anything that came before it. Some of the tracks are instrumentally and melodically unique while others subtly evoke the main theme using different keys and modes. Composing for video games is different than composing for passive media like film and television. Players have to enjoy the same track for minutes to hours before progressing to a new area, and the composer needs to account for randomized spikes in tension. A good track has to evoke the environment and situation of the characters while not being so distracting or repetitive that players get annoyed.
 
 Early games were limited to sound pallets that let composers program them like music boxes or player pianos. FF7 was allowed a much lusher pallet than most games before it and a greater number of "voices" as well. The result is Chopin performed on a Eurorack. Digital notes approximate classical instruments and gregorian chants. A cute ostrich dances to lo-fi Dick Dale.
 
