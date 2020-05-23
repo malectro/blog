@@ -6,19 +6,19 @@ description: thoughts on Bay to Breakers, Tech, and COVID
 
 It occurs to me that Bay to Breakers is canceled this year.
 
-When I first arrived in SF ten years ago, it was all my new coworkers could talk about. Many of them had just completed their first march to the Pacific, and they were full of that residual ecstasy that boils over into constant storytelling. This person has made it all the way to the ocean, and that person had started in Hayes Valley and passed out in Alamo Square. It was the last year they’d ever allow floats, which had mostly become mobile beer coolers. “You have to do it next year,” they told me, “but it’ll never be the same.”
+When I first arrived in SF ten years ago, it was all my new coworkers could talk about. Many of them had just completed their first march to the Pacific, and they were full of that residual ecstasy that boils over into constant storytelling. This person had made it all the way to the ocean, and that person had started in Hayes Valley and passed out in Alamo Square. It was the last year they’d ever allow floats, which had mostly become mobile beer coolers. “You have to do it next year,” they told me, “but it’ll never be the same.”
 
-My first year was punctuated by these events. Often scheduled on optimistically warm days, they were an excuse for people to walk the streets in costumes traditionally confined to Halloween. Free from the urban confines of car traffic and open container laws, the residents would break the grid, frequently with a corporate sponsor.
+My first year in SF was punctuated by these events. Often scheduled on optimistically warm days, they were an excuse for people to walk the streets in costumes traditionally confined to Halloween. Free from the urban confines of car traffic and open container laws, the residents would break the grid, frequently with a corporate sponsor.
 
-My introduction was Pride, the not-so-unique parade and celebration that was uniquely linked to the Castro Neighborhood. A college acquaintance who I had run into at a coffee/bicycle shop invited me to one of the edgier satellite events called The Pink Party, where we mostly watched athletic men get coaxed into stripping under a giant disco ball dangling by a crane. All around us people furiously danced to and mourned Michael Jackson, his insatiable pop blaring from ever DJ rig.
+My introduction was Pride, the not-so-unique parade and celebration that was uniquely linked to the Castro Neighborhood. A college acquaintance who I had run into at a coffee/bicycle shop invited me to one of the edgier satellite events called The Pink Party, where we mostly watched athletic men get coaxed into stripping under a giant disco ball dangled by a crane. All around us people furiously danced to and mourned Michael Jackson, his insatiable pop blaring from every DJ rig.
 
-College had shown me positivity, potential, and a world without outright judgment (full of an obsession for “cool”). This was college at scale, electrified by a current of MDMA.
+College had shown me positivity, potential, and a world without overt judgment (full of an obsession for “cool”). This was college at scale, electrified by a current of MDMA.
 
 And on they went, weeks of a recession-proof desk job I was lucky to have, were spent in anticipation of: Treasure Island, Outside Lands, Hardly Strictly, Lovefest, Critical Mass, Bike Party, Halloween (the real one), Santacon, and a block-party-like riot spurred by the Giants’ World Series win.
 
 The weekends with no obligations found us sipping beers and inhaling burritos in Dolores Park, unconcerned with the incessant thumping bass of whichever aspiring DJ bothered to bring a PA system. Vendors would pass by, and we’d buy over-powered THC truffles from copper pots, dried mushrooms from tie-dyed backpacks. Then the fog would roll it at 3pm like a curfew, and later that night we’d see a band play surf rock on guitars made in the 60s.
 
-—
+---
 
 It wasn’t long before I started to wonder if I was “part of the problem”.
 
@@ -40,7 +40,7 @@ Soon the homeless began pitching tents. People were horrified. Supervisors were 
 
 The problem got worse. Homeowners got richer. The horror abated and the tents stayed.
 
-—
+---
 
 My friends turned 30. Parties became dinner parties, and we coupled up. My girlfriend and I adopted a 20-lb chihuahua, pug mix.
 
@@ -52,9 +52,9 @@ Over the years my drunken walks through Bay to Breakers have matured to gruesome
 
 But the experience of crossing the city is the same. It is made small – small enough to hold. Each piece is suspended together, and it is easy to feel a sense of ownership. More than most American cities, its character seems to come just as much from its geography as its people – a geography that over the past decade is mostly unchanged.
 
-—
+---
 
-Recently, at the top of Buena Vista park today I met a neighbor who often holds court with his guitar and cheery wit. My dog walked up to him and was given a treat. We stayed 10 feet from one another.
+Recently, at the top of Buena Vista park I met a neighbor who often holds court with his guitar and cheery wit. My dog walked up to him and was given a treat. We stayed 10 feet from one another.
 
 He asked me what I thought of big tech going remote. There are no Google busses anymore, and companies have announced their intentions to keep it that way. From now on, most people making software won’t have to go to an office.
 

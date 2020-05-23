@@ -1,10 +1,9 @@
 ---
 title: Am I a Tech Bro?
-date: "2020-04-07T22:12:03.284Z"
 description: coming to terms
 ---
 
-I recently started baking sour dough. If you're aware of the "tech bro" stereotype and my chosen profession, you might find this to be on-the-nose, but just like running, baking as a hobby seems to have seen an upswing since we the quarantine started.
+I recently started baking sourdough. If you're aware of the "tech bro" stereotype and my chosen profession, you might find this to be on-the-nose, but just like running, baking as a hobby seems to have seen an upswing since we the quarantine started.
 
 My first loaf was a dense mess so I took to my friend-group Slack channel to ask for advice. Had I folded it enough? Had my proving heat been too high? Why was my crust gold when the one in the recipe had been a "deep brown"? One of my friends, also a software engineer, admitted he too had began feeding a starter and shared some photos of recent creations. He also sent me a link to an article in Eater and admitted it made him "feel real bad" about his decisions.
 
