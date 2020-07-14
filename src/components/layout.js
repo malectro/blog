@@ -71,6 +71,10 @@ function Layout(props) {
             a {
               color: #ffcc99;
             }
+
+            blockquote {
+              color: #ffeedd;
+            }
           }
           `}
         />
