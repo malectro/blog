@@ -1,0 +1,427 @@
+import BlogPostLayout from '../components/blog-post-layout';
+import {css} from '@emotion/core';
+
+export default BlogPostLayout;
+
+import {Demo} from '../components/Demo';
+import {Button, Button2, Button3, Button4, Button6} from '../components/css-rules/button';
+import * as Positioning from '../components/css-rules/positioning';
+import * as Sizing from '../components/css-rules/sizing';
+
+# Contemporary CSS
+
+I interview a lot, and candidates frequently ask me 'how we do our CSS' – specifically in the context of React, where solutions and libraries abound. Regular CSS? Styled Components? Emotion? Tailwind? CSS Modules (what we use)?
+
+For years I was overwhelmed by these options. SCSS had been supplanted by a polynomial number of solutions that all claimed to be better and cleaner and more performant than the next. But I've come to realize that these libraries are unimportant. Instead, we should endeavor to write less of it and do what React and Figma encourage us to do, embrace components.
+
+This may sound vague. Obviously we need to write *some* CSS. But I've found I can reduce my usage of it by considering these (breakable) rules.
+
+## Modularlize (No Globals)
+```css
+/* before */
+.input {
+  border: none;
+}
+
+/* after */
+.MyPage__input__fep3jc {
+  border: none;
+}
+```
+
+With few exceptions, like global rules and resets, CSS should be modularized. Modularization of CSS is probably the best thing to happen to the language over the course its life. Nearly every code base I worked on before modularization always reached a point where it was impossible to maintain. Every fix or change would break the style of some element somewhere else on the site. It was a nightmare. Even projects that adhered to pedantic namespacing rules couldn't escape this trap.
+
+Today, nearly every React-related CSS solution modularizes CSS so that classes written in one scope don't clash with classes written in another. This means I can safely edit and remove CSS without worrying about affecting some far-off block of code. As with ES modules, it should have always been this way.
+
+
+## Do Not Block
+Much of my early career was spent wrangling CSS to do what I wanted. Things like `float`, `clearfix`, `inline-block`, and `vertical-align` left me with cold sweats, and I hope I never have to deal with them again. When I picked up flexbox, I realized it wasn't my inability to memorize obstuse UI rules that was holding me back, it was `display: block;`. Block styling was designed to style blocks of text, and it still excells at it, but UI is not built of blocks of text. UI is built of components.
+
+The simple rule I follow now is `display: block` for text, `display: flex;` (and `display: grid;`) for everything else.
+
+## Components before CSS
+In my early React years, I found myself sharing repeated styles the old-fashioned way – with classes. This was wrong. I should have been reusing components. Part of the point of libraries like Styled Components is that they force you to do this, but you don't have to use them to think in components.
+
+```jsx
+// Before
+<div className="root">
+  <div className="row">Row 1</div>
+  <div className="row">Row 2</div>
+</div>
+
+// After
+function Row(props) {
+  return <div {...props} className="row" />;
+}
+<div className="root">
+  <Row>Row 1</Row>
+  <Row>Row 2</Row>
+</div>
+```
+
+This difference may seem trivial (and maybe boilerplate-y), but it forces you to think about your UI as a set of self-styled building blocks rather than a set of elements to be decorated. It also makes it much harder to misuse these decorations.
+
+An adjacent component file can simply import the subcomponents it needs, without getting any ideas of putting its own spin on things. Take the following layout example.
+
+```jsx
+import {Page, Nav, Subnav, DetailsContainer} from './common.jsx';
+
+export default function MyLayout() {
+  return (
+    <Page>
+      <Nav />
+      <Subnav />
+      <DetailsContainer>
+        Here are some details about this page.
+      </DetailsContainer>
+    </Page>
+  );
+}
+```
+
+Suddenly CSS is out of the picture. There is a semblance of structure here, but the concern is completely the high-level functionality. The beauty of components, like functions, is that they **encapsulate complexity** – leaving us to worry about other things.
+
+## Do not Cascade
+I often forget that CSS stands for **Cascading** Style Sheets. This was its original selling point, and maybe it made sense at the time? Often we'd embed blocks of JS and HTML wholesale with no ability to configure them. The Cascade allowed parents to override the look and feel of their children, which meant we could tweak these embedded blocks to our heart's content.
+
+But components are configurable, and these configurations are explicitly declared by their authors. We don't reach into functions and modify their variables; we pass parameters. If we decide a function should offer more flexibility, we modify it and update its paramater list.
+
+Let's look at an example.
+```css
+.button {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 30px;
+  padding: 0 10px;
+  border: 1px solid black;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: blue;
+  color: white;
+}
+```
+
+```jsx
+export function Button({children}) {
+  return <button class="button">{children}</button>;
+}
+```
+
+<Demo>
+  <Button>Click me</Button>
+</Demo>
+
+
+A developer creates a button. She uses it in her work but assumes a team member will find it useful.
+
+```css
+.my-component .button {
+  background-color: red;
+}
+```
+
+```jsx
+function MyComponent() {
+  return (
+    <div class="my-component">
+      Press this button.
+      <Button>Click!</Button>
+    </div>
+  );
+}
+```
+
+<Demo>
+  <Button2 />
+</Demo>
+
+Sure enough the author of `MyComponent` decides she wants basically the same button but with a red background color. She imports it and overrides its style using cascade.
+
+Now imagine the author of `Button` comes back and decides all buttons must be a little less intense. She writes the following CSS.
+
+```css
+.button {
+  /* ignoring old CSS for emphasis */
+  background-color: #eee;
+  color: #333;
+}
+```
+<Demo>
+  Our new classy button
+  <Button3>Click me</Button3>
+</Demo>
+
+Now the standard button has an off-white background with dark gray text. But she has no idea `MyComponent` exists. The button it overrode suddenly has some totally unreadable dark gray text on a red background. A stylistic bug has been introduced, and it's probably not obvious what the fix is.
+
+<Demo>
+  <Button4 />
+</Demo>
+
+Let's go back and avoid the cascade. Why do we need a button with a red background? Maybe it's meant to delete something? Maybe it's destructive? Instead of overriding its style, let's make it configurable.
+
+```css
+.button {
+  /* original CSS omitted for emphasis */
+  &.destructive {
+    background-color: red;
+  }
+}
+```
+
+```tsx
+// Note that I'm using TypeScript here to ensure `type`
+// is one of two strings.
+function Button({type, children}: {
+  type: 'primary' | 'destructive',
+  children: React.ReactNode,
+}) {
+  return <button class={`button ${type}`}>{children}</button>;
+}
+
+function MyComponent() {
+  return (
+    <div class="my-component">
+      Press this button.
+      <Button>Click!</Button>
+    </div>
+  );
+}
+```
+
+Now when the author of `Button` comes along to make her change, she thinks "Wow, someone added some options to my button. I better take them into account!"
+
+```css
+.button {
+  /* original CSS omitted for emphasis */
+  &.destructive {
+    color: red;
+  }
+}
+```
+
+<Demo>
+  <Button6 />
+</Demo>
+
+When everyone avoids the cascade, each author can be sure that none of their carefully considered styles are being hacked at. Code is more maintainable.
+
+Personally I still find situations where the cascade is useful (mostly for hover interactions), but I **always** avoid overriding the styles of a child component.
+
+
+## Do not Position Yourself
+In all my years of writing CSS, one property has burned me the most, `margin`. There are a lot of posts out there suggesting React devs avoid margin entirely, or that they put their `margin` and `padding` on different elements than the rest of their styles.
+
+My rule now is that components should never (again, with some exceptions) position and size themselves.
+
+Just as cascading allows parent components to break encapsulation, things like `margin` and relative positioning allow children to do the same. As a developer, I expect to be able to import a component and then position and size it within the parent component I'm writing. If it holds any positioning rules itself, it breaks this agreement.
+
+This problem compounds when components are used in multiple places. Imagine someone makes the following components.
+
+```css
+.navigation {
+  display: flex;
+}
+```
+
+```jsx
+function SearchInput() {
+  return <input type="search" className="search" placeholder="Search..." />
+}
+function Navigation() {
+  return <nav class="navigation">
+    <SearchInput />
+  </nav>;
+}
+```
+
+<Demo>
+  <Positioning.Example1 />
+</Demo>
+
+Then a second developer comes along and sees the nicely created `SearchInput`. She decides to use it in a separate component she's building.
+
+```css
+.side-navigation {
+  display: flex;
+  flex-flow: column;
+}
+```
+
+```jsx
+import {SearchInput} from 'other-file.jsx';
+
+function SideNavigation() {
+  return <nav class="side-navigation">
+    <SearchInput />
+    <Link to="/">Home</Link>
+    <Link to="/posts">Posts</Link>
+  </nav>;
+}
+```
+
+<Demo>
+  <Positioning.Example2 />
+</Demo>
+
+Now the original author comes back. She's been tasked with adding a company logo to the top navigation, and it requires moving the search input to accommodate.
+
+```jsx
+function SearchInput() {
+  return <input type="search" className="search" />
+}
+function Navigation() {
+  return <nav class="navigation">
+    <img src="/logo.svg" />
+    <SearchInput />
+  </nav>;
+}
+```
+
+She adds the following CSS.
+
+```css
+.search {
+  margin-left: 10px;
+}
+```
+
+<Demo>
+  <Positioning.Example3 />
+</Demo>
+
+Everything looks fine to her, but look at the side navigation.
+
+<Demo>
+  <Positioning.Example4 />
+</Demo>
+
+Obviously it now has some awkward padding. Assuming it's on a completely different page, she won't notice this unless someone runs a full manual round of QA. And it doesn't matter that she originally intended `SearchInput` to just be a helper component; design systems change constantly, and one-off code can always be upgraded to shared code.
+
+Here's how I'd write the CSS.
+
+```css
+.navigation > * + * {
+  margin-left: 10px;
+}
+```
+
+First off, I'll admit I'm breaking my previous rule. I'm using the cascade. But this is a special instance that I find extremely useful – specifically *the positioning of immediate children*. First, it solves our problem. `SearchInput` no longer attempts to position itself, and `SideNavigation` looks the way its supposed to. Second, it essentially declares `Navigation` to be a list of items with spacing. This future proofs the component against the insertion or removal of child items, and enforces consistent spacing between them.
+
+We can easily add links to the top navigation.
+
+```jsx
+function Navigation() {
+  return <nav class="navigation">
+    <img src="/logo.svg" />
+    <SearchInput />
+    <Link to="/">Home</Link>
+    <Link to="/posts">Posts</Link>
+  </nav>;
+}
+```
+
+<Demo>
+  <Positioning.Example5 />
+</Demo>
+
+And each item will be spaced without any extra CSS. This behavior is actually built in to CSS Grid, which has parent elements determine the size and spacing of their child elements using rules like `grid-template-columns` and `gap`.
+
+
+## Do not Size Yourself (Mostly)
+There are three types of sizes components can have:
+- fixed, where they never grow or shrink (e.g. bitmap images).
+- ranged, where they can grow or shrink to a max or min size (e.g. blocks of text).
+- flexible, where they can grow or shrink to any size.
+
+These types are often not consistent across dimensions, meaning that a component with a fixed y-axis may have a ranged x-axis.
+
+As the author of a component, it is often easiest to assume a fixed size. This means less testing and overall work, but it can make it much harder to use components in different contexts and generally causes long-term pain. On the other hand, we can't force components to all be completely flexible. Content like text can't shrink below the point of legibility, and 1px buttons are not click-able.
+
+The best we can do is strive to make all components as flexible as possible. This is often more upfront work, but makes development much easier over the long-term.
+
+Imagine we make a button.
+
+```jsx
+function Button({className, ...props}) {
+  return <button {...props} className={classnames('button', className)} />;
+}
+```
+
+```css
+.button {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 10px;
+  border: 1px solid black;
+  border-radius: 4px;
+  background-color: #eee;
+  color: #333;
+
+  /* separate sizing for emphasis */
+  width: 40px;
+  height: 30px;
+}
+```
+
+<Demo>
+  <Sizing.Example1 />
+</Demo>
+
+This fixed-size button will probably work fine for a bit, but it assumes all text will fit in 20px. Instead, let's use min values.
+
+```css
+.button {
+  min-width: 40px;
+  min-height: 30px;
+}
+```
+
+<Demo>
+  <Sizing.Example2 />
+</Demo>
+
+Now our button has a ranged size. It will look nice out of the box and will grow to accommodate its text (given the constraints of its container). Ranges also allow parents to set a fixed size within the allowed range, which is useful for visual consistency across multiple items.
+
+Imagine we have a list of buttons.
+
+```jsx
+import {Button} from './button.jsx';
+
+function MyComponent() {
+  return <div class="rsvp">
+    <Button>Yes</Button>
+    <Button>No</Button>
+    <Button>Maybe</Button>
+  </div>;
+}
+```
+
+```css
+.rsvp {
+  display: flex;
+
+  & > * + * {
+    margin-left: 10px;
+  }
+  & > * {
+    width: 100px;
+  }
+}
+```
+
+<Demo>
+  <Sizing.Example3 />
+</Demo>
+
+Instead of awkwardly different click ranges, we have consistent places for the user to drop their mouse. We could have fixed our button component width to 50, but by having the parent specify the width intead we allow for each page (and developer) to make their own decisions. As with positioning, leaving as much of the sizing up to the parent component makes our code more maintainable.
+
+## The End
+When all of these rules are used, I find building UI to be much more of a
+concern of how things behave rather than how they look. It's still surprising
+to me how much of my time used to be dedicated to fine tuning my CSS, all the
+while following arcane namespacing standards. The modern web is worlds away
+from pre-ajax, pre-jQuery days. Our CSS should be too.
