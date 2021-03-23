@@ -11,32 +11,23 @@ class BlogIndex extends React.Component {
   render() {
     const { data } = this.props;
     const siteTitle = data.site.siteMetadata.title;
-    const posts = data.allMarkdownRemark.edges.filter(edge =>
-      Boolean(edge.node.frontmatter.date),
-    ).map(edge => ({
-      ...edge,
-      node: {
-        ...edge.node,
-        slug: edge.node.fields.slug,
-      },
-    }));
-
     const mdxPosts = data.allMdx.edges;
 
     return (
       <Layout location={this.props.location} title={siteTitle}>
         <SEO title="All posts" />
         <Bio />
-        {mdxPosts.concat(posts).map(({ node }) => {
-          const title = node.frontmatter.title || node.slug;
+        {mdxPosts.map(({ node }) => {
+          const {slug} = node.fields;
+          const title = node.frontmatter.title || slug;
           return (
-            <div key={node.slug}>
+            <div key={slug}>
               <h3
                 style={{
                   marginBottom: rhythm(1 / 4),
                 }}
               >
-                <Link style={{ boxShadow: `none` }} to={node.slug}>
+                <Link style={{ boxShadow: `none` }} to={slug}>
                   {title}
                 </Link>
               </h3>
@@ -64,27 +55,13 @@ export const pageQuery = graphql`
       }
     }
 
-    allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC }) {
+    allMdx(sort: { fields: [frontmatter___date], order: DESC }) {
       edges {
         node {
           excerpt
           fields {
             slug
           }
-          frontmatter {
-            date
-            title
-            description
-          }
-        }
-      }
-    }
-
-    allMdx(sort: { fields: [frontmatter___date], order: DESC }) {
-      edges {
-        node {
-          excerpt
-          slug
           frontmatter {
             date
             title

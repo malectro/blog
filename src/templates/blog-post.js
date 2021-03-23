@@ -1,16 +1,24 @@
 import React from "react"
 import { Link, graphql } from "gatsby"
 import {css} from '@emotion/core';
+import { MDXProvider } from "@mdx-js/react";
+import { MDXRenderer } from "gatsby-plugin-mdx"
 
 import Bio from "../components/bio"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
+import Prism from '../components/Prism';
 import { rhythm, scale } from "../utils/typography"
 import {formatTimestamp} from '../utils/date';
 
+const shortcodes = {
+  pre: (props) => <div {...props} />,
+  code: Prism,
+};
+
 class BlogPostTemplate extends React.Component {
   render() {
-    const post = this.props.data.markdownRemark
+    const post = this.props.data.mdx
     const siteTitle = this.props.data.site.siteMetadata.title
     const { previous, next } = this.props.pageContext
 
@@ -31,11 +39,7 @@ class BlogPostTemplate extends React.Component {
         >
           {formatTimestamp(post.frontmatter.date)}
         </p>
-        <div css={css`
-          & hr {
-            background: #eeaa55;
-          }
-        `} dangerouslySetInnerHTML={{ __html: post.html }} />
+        <MDXProvider components={shortcodes}><MDXRenderer>{post.body}</MDXRenderer></MDXProvider>
         <hr
           style={{
             marginBottom: rhythm(1),
@@ -82,10 +86,10 @@ export const pageQuery = graphql`
         author
       }
     }
-    markdownRemark(fields: { slug: { eq: $slug } }) {
+    mdx(fields: { slug: { eq: $slug } }) {
       id
       excerpt(pruneLength: 160)
-      html
+      body
       frontmatter {
         title
         date(formatString: "MMMM DD, YYYY")

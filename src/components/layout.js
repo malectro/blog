@@ -74,6 +74,7 @@ function Layout(props) {
           code {
             font-size: inherit;
             line-height: inherit;
+            padding: 0.2em;
           }
 
           pre {
@@ -100,8 +101,20 @@ function Layout(props) {
               color: var(--color-link);
             }
 
+            strong {
+              font-weight: 800;
+            }
+
             strong, em {
               color: var(--color-emph);
+            }
+
+            hr {
+              background: #eeaa55;
+            }
+
+            code {
+              background: #444;
             }
           }
           `}
