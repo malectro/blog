@@ -6,6 +6,7 @@ import Bio from "../components/bio"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import { rhythm, scale } from "../utils/typography"
+import {formatTimestamp} from '../utils/date';
 
 class BlogPostTemplate extends React.Component {
   render() {
@@ -28,7 +29,7 @@ class BlogPostTemplate extends React.Component {
             marginTop: rhythm(-1),
           }}
         >
-          {post.frontmatter.date}
+          {formatTimestamp(post.frontmatter.date)}
         </p>
         <div css={css`
           & hr {

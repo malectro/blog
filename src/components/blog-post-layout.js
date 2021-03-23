@@ -8,6 +8,7 @@ import Layout from '../components/layout';
 import SEO from '../components/seo';
 import Prism from '../components/Prism';
 import { rhythm, scale } from '../utils/typography';
+import {formatTimestamp} from '../utils/date';
 
 const shortcodes = {
   pre: (props) => <div {...props} />,
@@ -47,7 +48,7 @@ export function BlogPostLayout({
           marginTop: rhythm(-1),
         }}
       >
-        {frontmatter.date}
+        {formatTimestamp(frontmatter.date)}
       </p>
       <div
         css={css`
