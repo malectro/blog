@@ -51,8 +51,18 @@ export function BlogPostLayout({
       </p>
       <div
         css={css`
+          /* TODO (kyle): merge this with the global styles? */
           & hr {
             background: #eeaa55;
+          }
+
+          & code {
+            background: #444;
+            padding: 0.2em;
+          }
+
+          & strong {
+            font-weight: 800;
           }
         `}
       >

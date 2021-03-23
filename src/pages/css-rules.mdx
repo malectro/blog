@@ -227,7 +227,11 @@ This problem compounds when components are used in multiple places. Imagine some
 
 ```jsx
 function SearchInput() {
-  return <input type="search" className="search" placeholder="Search..." />
+  return <input
+    type="search"
+    className="search"
+    placeholder="Search..."
+  />;
 }
 function Navigation() {
   return <nav class="navigation">
@@ -345,7 +349,10 @@ Imagine we make a button.
 
 ```jsx
 function Button({className, ...props}) {
-  return <button {...props} className={classnames('button', className)} />;
+  return <button
+    {...props}
+    className={`button ${className}`}
+  />;
 }
 ```
 

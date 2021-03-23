@@ -12,8 +12,6 @@ export function Prism({className, children}) {
     language,
   });
 
-  return <DefaultRenderer css={css`
-    padding: 20px;
-  `} {...info} />;
+  return <DefaultRenderer {...info} />;
 }
 export default Prism;

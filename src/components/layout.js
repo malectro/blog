@@ -62,14 +62,46 @@ function Layout(props) {
       >
         <Global
           styles={css`
+          :root {
+            --font-serif: 'Merriweather', 'Georgia', serif;
+            --font-sans: Montserrat, sans-serif;
+
+            --space-2: 20px;
+
+            --border-radius-box: 10px;
+          }
+
+          code {
+            font-size: inherit;
+            line-height: inherit;
+          }
+
+          pre {
+            padding: var(--space-2);
+            font-size: inherit;
+            overflow-y: auto;
+            border-radius: var(--border-radius-box);
+          }
+
           @media (prefers-color-scheme: dark) {
+            :root {
+              --color-fg: #f7edd2;
+              --color-bg: #333;
+              --color-link: #ffcc99;
+              --color-emph: #b5fff5;
+            }
+
             body {
               background: linear-gradient(to bottom right, #333, #111);
-              color: #ffeebb;
+              color: var(--color-fg);
             }
 
             a {
-              color: #ffcc99;
+              color: var(--color-link);
+            }
+
+            strong, em {
+              color: var(--color-emph);
             }
           }
           `}
