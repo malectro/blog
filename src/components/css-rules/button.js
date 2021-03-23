@@ -18,7 +18,7 @@ export function Button({className, children}) {
 }
 
 export function Button2() {
-  return <div css={css`color: black; & button {background-color: #aa0000;}`}>
+  return <div css={css`& button {background-color: #aa0000;}`}>
     Press this button.
     <Button>Click!</Button>
   </div>;
@@ -32,7 +32,7 @@ export function Button3({children}) {
 }
 
 export function Button4() {
-  return <div css={css`color: black; & button {background-color: #aa0000;}`}>
+  return <div css={css`& button {background-color: #aa0000;}`}>
     Gross
     <Button3>Click!</Button3>
   </div>;

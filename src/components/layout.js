@@ -69,6 +69,16 @@ function Layout(props) {
             --space-2: 20px;
 
             --border-radius-box: 10px;
+
+            --color-fg: #333;
+            --color-bg: #f7edd2;
+            --color-link: #bf6c18;
+            --color-emph: #01957e;;
+          }
+
+          body {
+            background: linear-gradient(to bottom right, #eee, #ccc);
+            color: var(--color-fg);
           }
 
           code {
@@ -84,6 +94,22 @@ function Layout(props) {
             border-radius: var(--border-radius-box);
           }
 
+          a {
+            color: var(--color-link);
+          }
+
+          strong {
+            font-weight: 800;
+          }
+
+          strong, em {
+            color: var(--color-emph);
+          }
+
+          code {
+            background: #ccc;
+          }
+
           @media (prefers-color-scheme: dark) {
             :root {
               --color-fg: #f7edd2;
@@ -94,19 +120,6 @@ function Layout(props) {
 
             body {
               background: linear-gradient(to bottom right, #333, #111);
-              color: var(--color-fg);
-            }
-
-            a {
-              color: var(--color-link);
-            }
-
-            strong {
-              font-weight: 800;
-            }
-
-            strong, em {
-              color: var(--color-emph);
             }
 
             hr {
