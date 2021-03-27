@@ -5,6 +5,7 @@ export function Demo({children}) {
   return <div css={css`
     @media (prefers-color-scheme: dark) {
       background-color: var(--color-fg);
+      color: var(--color-bg);
 
       a {
         color: #00649f;
@@ -18,7 +19,6 @@ export function Demo({children}) {
 
     padding: var(--space-2);
     margin-bottom: 1em;
-    color: var(--color-bg);
     font-family: 'Helvetica Neue', Arial, sans-serif;
     /* font-family: var(--font-sans); */
     border-radius: var(--border-radius-box);
