@@ -22,7 +22,7 @@ In 1997 I had no doubts. Every second I spent playing the game was good. And lif
 
 [^1]: Looking back at these background images (or "fields"), it's surprising how pixelated they are on modern screens, but the detail is still stunning. You get the sense that the artists were fans of Lucas and Terantino, carefully placing a pile of clothes in a hamper or a bottle of pills near a bedside – catnip for a fantasy nut looking for meaning.
 
-  Among the fan community (which still thrives), it is understood that the original models used to render these backgrounds have been lost, which is why Square has never included high-res versions in any of its re-releases. Some of them have taken it upon themselves to recreate each one using modern tools. They are about 5% done.
+    Among the fan community (which still thrives), it is understood that the original models used to render these backgrounds have been lost, which is why Square has never included high-res versions in any of its re-releases. Some of them have taken it upon themselves to recreate each one using modern tools. They are about 5% done.
 
 ---
 
