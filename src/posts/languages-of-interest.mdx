@@ -1,0 +1,407 @@
+- setup
+- compiler errors
+- error handling
+- memory management
+  - ownership
+- immutability
+- generics
+  - iterators
+  - generators
+- sugar
+  - destructuring
+  - pattern matching
+  - swapping
+  - tuples
+
+# Language Speed Dating
+
+I'm a front-end web developer, which means I'm a JavaScript developer. This has
+been both a curse and an asset, given how confusing, exciting, confounding, and
+useful the language can be. Today most of my colleagues and I are TypeScript
+converts that recognize both the good (excellent async, immutabile operations,
+and data manipulation) and the bad (prototypes, reflection, globals, function
+scoping, clunky immutability).
+
+But as ES, JS, and TS continue to evolve, it's becoming clear to more and more
+front-end devs that this ecosystem isn't always the best tool for the job. TS
+and JS are often at odds with one another to the point where valid, bug-free JS
+might be invalid TS. And the performance of popular builders like Babel and
+Webpack has become a bottleneck for teams with large code bases. Like their
+Python and Ruby counterparts JS devs are turning to higher performance,
+strictly typed languages like Rust and Go with more frequency.
+
+So I set out to teach myself Rust and Go. I'll discuss the quirks and tradeoffs
+I found here. I'm also going to include Deno, since it can act as a base case
+for JS devs like me that are looking for a tight ecosystem with strict typing
+(mostly) and a focus on performance.
+
+In general, Deno, Go, and Rust all sit at slightly different altitutes when it comes
+to "level", and this is fine. Deno may be the easiest to pick up for JS people
+and non-devs alike, Rust's intense focus on memory safety can be
+difficult for beginners, and Go sits somewhere in between.
+
+I'll go point by point, discussing attributes I found particularly interesting.
+This list is hardly meant to be exhaustive (or very accurate) so please don't
+email me (or do?).
+
+## Setup
+
+Setup for all three languages is extremely easy. This speaks to how far the
+programming world has come since I was in college, when it took me a day
+to get going with anything. I credit both the Ruby and Node communities for
+pushing for things like readable error messages and suggestions for fixes
+that make installation and compilation much more friendly.
+
+### Deno
+
+Deno comes with a compiler, linter, formatter, bundler, and language server.
+Some of it is written in JS, but the bulk is written in Rust. This makes
+compiling and running `js` and `ts` files very fast. Deno scripts can actually
+be compiled down to executables, which is pretty cool for JS.
+
+Unlike Node, it comes with nearly every browser API built in. Things
+like `fetch` and `Performance` just work. It's standard library is based on
+Go's, which means things like `lodash` are mostly unnecessary. Also unlike Node,
+modules are imported by URL (like they are in the browser). This can feel
+unsafe if you aren't using a reliable cdn or your own server, but it's
+safe enough for the W3C.
+
+Setting up the language server, linter, and formatter to work with neovim,
+my preferred editor, was straightfoward and awesome.
+
+### Go
+
+Go comes with a compiler, a formatter, and a version controller. Like Deno,
+running a Go program is as easy as `go run ./my-script.go`, but because Go
+is entirely functional, files must have a `main` function as well as
+some basic imports to do anything of interest.
+
+I couldn't get `gfmt` to work in neovim, but I'm pretty sure this was my fault.
+That said, the lack of a standard language server is pretty strange, given how
+hot those are right now.
+
+Importing Go packages is similar to Deno, in that they are specified by URL.
+
+### Rust
+
+Rust comes with `cargo`, it's CLI swiss army knife. Cargo is a compiler,
+linter, formatter, language server, dependency manager. Rust programs can
+import external packages, but they are specified the name registered to
+`crates.io`, the community registry. This will feel similar to Node users
+that are familiar with NPM.
+
+Setting up neovim to use `cargo` was about as easy as it was with Deno, which
+is great.
+
+Incidentally, the Rust compiler will actually suggest fixes for mistakes like
+mispellings, and will give friendly lint warnings about things like camel case
+(which violates the style guide).
+
+## Memory Management
+
+This is probably where the languages differ the most and may be the main
+deciding factor in choosing one. I'll try to be as sussinct as possible.
+
+### Deno
+
+Memory in Deno is managed exactly the same way as it is in Node or the browser.
+That is to say, primitive values are allocated to the stack and passed by value,
+and everything else is allocated on the heap and passed by reference. Memory
+is freed using garbage collection. There is no such thing as a pointer.
+
+// PUT THIS SOMEWHERE ELSE?
+This simplicity, paired with the ease of writing Deno scripts, makes it a
+great choice for making simple tools that aren't performance sensitive.
+
+### Go
+
+Memory in Go is slightly more complicated, but not much. Data is copied by
+default or passed by reference using `&`. Go will decide to allocate to the
+heap if it determines that data is intended to go out of scope, like if a
+function declares a struct and returns it. Go also has garbage collection.
+
+For JS people, the "copy by default" behavior can be confusing at first, but it
+prevents a lot of the bugs caused by shared references and is actually pretty convenient if
+you're used to seeing `array = [...array, item]` rather than `array.push(item)`
+in your code base.
+
+### Rust
+
+Memory allocation in Rust is entirely up to the developer. When memory is allocated,
+it is explicitly allocated to the stack or the heap. Assignment determines "ownership"
+or scope where the memory will be allocated. Data is only available for
+the life of its scope, and the compiler will error out if you try to return data
+allocated and assigned within a function (for example).
+
+Unlike Go (and JS), Rust has strict rules about the amount of references that
+can exist to any given piece of data. In particular, there can only exist one
+mutable reference at a time. This can make all sorts of things that would be
+simple in JS, nearly impossible in Rust, like modifying a Vector while looping
+over it.
+
+Rust also makes a distinction between "copying" and "cloning". Like Go, Rust
+will copy assigned values by default, but unlike Go, these values must be
+"copyable". Basic values like integers and arrays are copyable, but most
+dynamic data structures like Vectors and HashMaps are not. Most data can be
+cloned, but `clone()` is an explicit call. This distinction reflects the
+underlying performance of the hardware and is representative of Rust's
+desire to steer programmers toward high performance.
+
+Rust also doesn't have a concept of null. All variables must point to a value, which
+prevents bugs caused by dangling pointers. (Rust also has structs designed to act like
+null.)
+
+In general, all these rules forced me to write better code and be much more
+cognizant of how much memory I was using, but they could also be extremely
+frustrating. Rust's approach to memory management is the biggest barrier
+for most people and probably the main reason it's not more widely used. But
+if we're talking about ease of use, it's probably unfair to compare Rust
+to Go. The real point of comparison should be C++, which, despite its
+storied history, makes it really easy to do things like leak memory
+and attempt to access data not owned by the program.
+
+## Paradigms
+
+### Deno
+
+Like JS, TypeScript is both functional and class-based. Most front-end organizations
+I encounter these days tend to prefer functional programming because
+it makes it easier to handle and copy the data that flows through their programs
+without having to deal with any of the opacity and inheritence trees of class instances.
+
+That said, many browser APIs are still class based, so the keyword `new` is generally unavoidable.
+
+In general, JS is old enough and has so many features, that there are often many ways to do
+the same thing, and most devs will find themselves using a subset of its "good" features.
+
+### Go and Rust
+
+Both Go and Rust are functional, but they also allow programmers to associate functions with
+structured data using interfaces and traits. This simple setup is what a lot of the JS programmers
+that avoid the word `class` wish they had, but it's unlikely that JS will ever get an equivalent.
+
+## The Rest of The Stuff
+
+This last part will be a quick summary of the features I found most interesting in each
+of these languages and their existent (or non-existent) equivalents in the others. But the
+most important difference that underlies a lot of these quirks is that the current version of
+Go does not support generics. This is **HUGE** and makes a lot of the things JS and Rust devs
+take for granted nearly impossible. But Go is introducing generics soon, and it could mean
+big changes to a lot of its standard libraries.
+
+### Type Inference
+
+All three languages have some level of type inference, but Go requires that devs explicitly
+indicate when they want inference to be performed using `:=`.
+
+```typescript
+let num = 0;
+let num: number = 0;
+```
+
+```go
+  num := 0;
+  var num int = 0;
+```
+
+```rust
+  let num = 0;
+  let num: int = 0;
+}
+```
+
+### Copying Data
+
+#### Deno
+
+```javascript
+let newData = structuredClone(data);
+```
+
+#### Go
+
+```go
+  newData := data
+```
+
+#### Rust
+
+```rust
+  // copy
+  let newData = data;
+  // clone
+  let newData = data.clone();
+```
+
+### Iterators
+
+Both JS and Rust have iterators that work fairly similarly, but most of the array methods
+JS devs are used to (map, reduce), exist on Rust iterators instead. In practice, this
+leads to more performant code, because data is processed lazily, and slices are not
+repeatedly copied.
+
+Rust iterators also have the very convient `collect` method that magically converts them
+into the data structure of your choice.
+
+Something clunky like
+
+```javascript
+const usersById = new Map(users.map(user => [user.id, user]));
+```
+
+becomes
+
+```rust
+let users_by_id: Map<usize, User> = users.iter().map(|user| (user.id, user)).collect();
+```
+
+Go has a lot of things that look like iterators (like `bufio.Scanner`), but because it
+lacks generics, they do not necessarily share common methods. This means all of the neat
+iterator and array methods available in JS and Rust are not there in Go, which IMO sucks
+and makes processing data much more of a headache.
+
+### Generators
+
+Only JS currently has generators. Rust has some version of them in a nightly build, which
+means they're on the horizon, but until then its pretty difficult to write a function that
+returns an iterator without implementing a custom iterator yourself. (I actually did this
+to calculate permutations of a vector for a coding exercise.)
+
+Because Go desn't even have iterators, generators are probably pretty far off.
+
+### Tuples
+
+Because Deno is running TypeScript, it has a concept of tuples, but because it's a superset of JS,
+tuples are actually just arrays of a fixed size.
+
+Rust tuples are actually their own data type and work much like they do in Python. Both Rust tuples
+and JS tuples allow functions to return multiple values.
+
+Go does not have tuples (again, because of generics), but it does allow functions to return
+multiple values.
+
+### Errors and Error Handling
+
+JS has the try/catch we all know and love. Rust and Go take similar but
+slightly different approaches to error handling.
+
+Go functions will often return two values: the desired result and a possible
+error. If one of these values is `nil`, then the other will have data.
+
+Rust has a special enum type `Result`, that can either contain an error or a
+value.
+
+### Pattern Matching
+
+Only Rust has pattern matching, the coolest piece of syntax in any language.
+
+### Destructuring
+
+JS has supported destructuring assigments for a while, but Go does not. Rust's
+version of it dovetails with its pattern matching and is probably more powerful but
+not exactly the same.
+
+```javascript
+try {
+  const { id: userId } = getUser();
+  console.log("the user's id is", userId);
+} catch (error) {
+  console.log('ther user is not logged in.');
+}
+```
+
+```rust
+match get_user() {
+  Some(User {id}) => {
+    println!("the user's id is {}", id);
+  },
+  _ => {
+    println!("the user is not logged in.");
+  }
+}
+```
+
+### Returning Values
+
+Values must be explicitly returned in JS and Go using the `return` statement.
+
+Rust functions, like those in Ruby, will return the result of their last expression. In fact,
+all expressions in Rust resolve to a value. This means that ternaries are unnecessary
+(and non-existent).
+
+```rust
+fn at_least(value: int, min: int) -> int {
+  if value < min {
+    min
+  } else {
+    value
+  }
+}
+```
+
+`return` can still be used for early returns.
+
+### Loops
+
+Coming from JS loops, Rust loops can feel similar. `for in` allows iterating over in iterator,
+and `while` will continue to loop as long as its expression is true. Infinite loops are simply
+`loop`, and `break` and `continue` are available.
+
+Rust also supports looping over ranges.
+
+```rust
+// with an iterator
+for value in values.iter() {
+  print!("{}", value);
+}
+
+// with a range
+for i in 0..values.len() {
+  print!("{}", values[i]);
+}
+
+// while
+let mut i = 0;
+while i < values.len() {
+  print!("{}", values[i]);
+  i += 1;
+}
+
+// infinite
+let mut i = 0;
+loop {
+  if i >= values.len() {
+    break;
+  }
+  print!("{}", values[i]);
+  i += 1;
+}
+```
+
+Go has one type of loop, `for`, but it covers all cases. Because it doesn't have iterators,
+it provides a `range` keyword that pulls out members of a collection.
+
+```go
+for i, value := range values {
+  fmt.Print(value);
+}
+
+for i := 0; i < len(values); i += 1 {
+  fmt.Print(values[i])
+}
+
+i := 0
+for i < len(values) {
+  fmt.Print(values[i])
+  i += 1
+}
+
+i := 0
+for {
+  if i >= len(values) {
+    break
+  }
+  fmt.Print(values[i])
+  i += 1
+}
+```
